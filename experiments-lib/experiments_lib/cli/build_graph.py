@@ -180,7 +180,13 @@ def _get_receivables(sql_service_factory):
             """
         )
         receivables_df = pd.DataFrame(rows)
-        mapping_df=pd.read_csv("data/interim/file_id_mapping.csv")
+        mapping_1_df=pd.read_csv("data/interim/file_id_mapping.part1.csv")
+        mapping_2_df=pd.read_csv("data/interim/file_id_mapping.part2.csv")
+        mapping_3_df=pd.read_csv("data/interim/file_id_mapping.part3.csv")
+        mapping_df= pd.concat(
+            [mapping_1_df, mapping_2_df, mapping_3_df], 
+            ignore_index=True
+        )
         receivables_df = receivables_df.merge(mapping_df, on="file_id")
         receivables_df["file_id"] = receivables_df["ws_file_id"]
         receivables_df = receivables_df.drop(columns="ws_file_id")
