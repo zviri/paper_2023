@@ -27,7 +27,7 @@ psycopg2 = "^2.9.3"
 datetime-truncate = "^1.1.1"
 matplotlib = "^3.5.2"
 networkx = "^2.8.4"
-gspan-mining = {path = "../../gSpan", develop = true}
+gspan-mining = { git = "https://github.com/zviri/gSpan.git", rev = "333379e" }
 black = "^22.8.0"
 papermill = "^2.4.0"
 apyori = "^1.1.2"
