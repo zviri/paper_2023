@@ -1,5 +1,4 @@
 OCR_RESPONSES_FOLDER = os.environ.get("OCR_RESPONSES_FOLDER")
-KERNEL = os.environ.get("KERNEL")
 
 rule all:
     input:
@@ -79,7 +78,7 @@ rule analyze_retail_graph:
     shell:
         """
         mkdir -p data/notebooks
-        papermill -k {KERNEL} nb_templates/check_graph.ipynb -p graph_path {input.graph} -p nodes_path {input.nodes} -p edges_path {input.edges} -p insolvency_data_path {input.insolvency_data} {output} 
+        papermill nb_templates/check_graph.ipynb -p graph_path {input.graph} -p nodes_path {input.nodes} -p edges_path {input.edges} -p insolvency_data_path {input.insolvency_data} {output} 
         """
 
 rule business_subgraph:
@@ -115,7 +114,7 @@ rule analyze_business_graph:
     shell:
         """
         mkdir -p data/notebooks
-        papermill -k {KERNEL} nb_templates/check_graph.ipynb -p graph_path {input.graph} -p nodes_path {input.nodes} -p edges_path {input.edges} -p insolvency_data_path {input.insolvency_data} {output} 
+        papermill nb_templates/check_graph.ipynb -p graph_path {input.graph} -p nodes_path {input.nodes} -p edges_path {input.edges} -p insolvency_data_path {input.insolvency_data} {output} 
         """
 
 rule analyze_both_graphs:
@@ -128,7 +127,7 @@ rule analyze_both_graphs:
     shell:
         """
         mkdir -p data/notebooks
-        papermill -k {KERNEL} nb_templates/check_both_graphs.ipynb -p retail_graph_path {input.retail_graph_path} -p business_graph_path {input.business_graph_path} -p nodes_path {input.nodes} {output} 
+        papermill nb_templates/check_both_graphs.ipynb -p retail_graph_path {input.retail_graph_path} -p business_graph_path {input.business_graph_path} -p nodes_path {input.nodes} {output} 
         """
 
 rule export_to_retail_graph_to_germ_format:
@@ -177,7 +176,7 @@ rule analyze_retail_patterns:
         patterns="data/notebooks/retail_pattern_analysis.{num_edges}.{min_support}.ipynb",
     shell:
         """
-        papermill -k {KERNEL} nb_templates/analyze_retail_patterns.ipynb -p germ_output_path {input.germ_output} -p node_label_mapping_path {input.node_label_mapping} -p nodes_path {input.nodes} -p edges_path {input.edges} -p debtors_path {input.debtors} -p insolvency_data_path {input.insolvency_data} {output} 
+        papermill nb_templates/analyze_retail_patterns.ipynb -p germ_output_path {input.germ_output} -p node_label_mapping_path {input.node_label_mapping} -p nodes_path {input.nodes} -p edges_path {input.edges} -p debtors_path {input.debtors} -p insolvency_data_path {input.insolvency_data} {output} 
         """
 
 rule run_germ_on_business_graph:
@@ -204,5 +203,5 @@ rule analyze_business_patterns:
         patterns="data/notebooks/business_pattern_analysis.{num_edges}.{min_support}.ipynb",
     shell:
         """
-        papermill -k {KERNEL} nb_templates/analyze_business_patterns.ipynb -p germ_output_path {input.germ_output} -p node_label_mapping_path {input.node_label_mapping} -p nodes_path {input.nodes} -p edges_path {input.edges} -p debtors_path {input.debtors} -p insolvency_data_path {input.insolvency_data} {output} 
+        papermill -k nb_templates/analyze_business_patterns.ipynb -p germ_output_path {input.germ_output} -p node_label_mapping_path {input.node_label_mapping} -p nodes_path {input.nodes} -p edges_path {input.edges} -p debtors_path {input.debtors} -p insolvency_data_path {input.insolvency_data} {output} 
         """

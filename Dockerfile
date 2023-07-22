@@ -52,4 +52,7 @@ COPY experiments-lib/ experiments-lib/
 RUN cd /install/experiments-lib && poetry build && pip install dist/*.whl --no-deps
 
 WORKDIR /experiments
+ENV EXPERIMENTS_HOMEDIR /experiments
+RUN python3 -m ipykernel install --user
 COPY Snakefile Snakefile
+COPY nb_templates nb_templates
